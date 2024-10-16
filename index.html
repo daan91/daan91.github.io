@@ -1,9 +1,9 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vlaggen van de Wereld</title>
+    <title>Vlaggen Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,14 +16,13 @@
             color: #35424a;
         }
         .flag-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
+            display: flex;
+            justify-content: center;
             margin-top: 20px;
         }
         .flag {
-            width: 100%;
-            height: 60px;
+            width: 200px;
+            height: 120px;
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -36,46 +35,96 @@
             max-width: 100%;
             max-height: 100%;
         }
+        .quiz-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-<h1>Vlaggen van de Wereld</h1>
+<h1>Vlaggen Quiz</h1>
 <div class="flag-container">
-    <div class="flag"><img src="https://flagcdn.com/w320/us.png" alt="Vlag van de Verenigde Staten"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/nl.png" alt="Vlag van Nederland"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/de.png" alt="Vlag van Duitsland"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/fr.png" alt="Vlag van Frankrijk"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/it.png" alt="Vlag van Italië"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/es.png" alt="Vlag van Spanje"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/gb.png" alt="Vlag van het Verenigd Koninkrijk"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/br.png" alt="Vlag van Brazilië"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/jp.png" alt="Vlag van Japan"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/au.png" alt="Vlag van Australië"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/cn.png" alt="Vlag van China"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/ca.png" alt="Vlag van Canada"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/in.png" alt="Vlag van India"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/ru.png" alt="Vlag van Rusland"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/za.png" alt="Vlag van Zuid-Afrika"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/mx.png" alt="Vlag van Mexico"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/kr.png" alt="Vlag van Zuid-Korea"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/ng.png" alt="Vlag van Nigeria"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/ae.png" alt="Vlag van de Verenigde Arabische Emiraten"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/pt.png" alt="Vlag van Portugal"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/th.png" alt="Vlag van Thailand"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/se.png" alt="Vlag van Zweden"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/fi.png" alt="Vlag van Finland"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/dk.png" alt="Vlag van Denemarken"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/no.png" alt="Vlag van Noorwegen"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/ie.png" alt="Vlag van Ierland"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/at.png" alt="Vlag van Oostenrijk"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/ch.png" alt="Vlag van Zwitserland"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/sg.png" alt="Vlag van Singapore"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/ae.png" alt="Vlag van de Verenigde Arabische Emiraten"></div>
-     <div class="flag"><img src="https://flagcdn.com/w320/be.png" alt="Vlag van belgie"></div>
-    <div class="flag"><img src="https://flagcdn.com/w320/pa.png" alt="Vlag van panama"></div>
-<div class="flag"><img src="https://flagcdn.com/w320/pg.png" 
-alt="vlag van papoea-nieuw-guinea"
+    <div class="flag" id="flag"><img src="https://flagcdn.com/w320/us.png" alt="Vlag van de Verenigde Staten"></div>
+</div>
+<div class="quiz-container">
+    <p>Wat is de naam van dit land?</p>
+    <input type="text" id="answer" placeholder="Typ hier je antwoord...">
+    <button onclick="checkAnswer()">Controleer antwoord</button>
+    <p id="result"></p>
+</div>
+
+<script>
+    const flags = [
+        { src: "https://flagcdn.com/w320/us.png", country: "Verenigde Staten" },
+        { src: "https://flagcdn.com/w320/nl.png", country: "Nederland" },
+        { src: "https://flagcdn.com/w320/de.png", country: "Duitsland" },
+        { src: "https://flagcdn.com/w320/fr.png", country: "Frankrijk" },
+        { src: "https://flagcdn.com/w320/it.png", country: "Italië" },
+        { src: "https://flagcdn.com/w320/es.png", country: "Spanje" },
+        { src: "https://flagcdn.com/w320/gb.png", country: "Verenigd Koninkrijk" },
+        { src: "https://flagcdn.com/w320/br.png", country: "Brazilië" },
+        { src: "https://flagcdn.com/w320/jp.png", country: "Japan" },
+        { src: "https://flagcdn.com/w320/au.png", country: "Australië" },
+        { src: "https://flagcdn.com/w320/cn.png", country: "China" },
+        { src: "https://flagcdn.com/w320/ca.png", country: "Canada" },
+        { src: "https://flagcdn.com/w320/in.png", country: "India" },
+        { src: "https://flagcdn.com/w320/ru.png", country: "Rusland" },
+        { src: "https://flagcdn.com/w320/za.png", country: "Zuid-Afrika" },
+        { src: "https://flagcdn.com/w320/mx.png", country: "Mexico" },
+        { src: "https://flagcdn.com/w320/kr.png", country: "Zuid-Korea" },
+        { src: "https://flagcdn.com/w320/ng.png", country: "Nigeria" },
+        { src: "https://flagcdn.com/w320/ae.png", country: "Verenigde Arabische Emiraten" },
+        { src: "https://flagcdn.com/w320/pt.png", country: "Portugal" },
+        { src: "https://flagcdn.com/w320/th.png", country: "Thailand" },
+        { src: "https://flagcdn.com/w320/se.png", country: "Zweden" },
+        { src: "https://flagcdn.com/w320/fi.png", country: "Finland" },
+        { src: "https://flagcdn.com/w320/dk.png", country: "Denemarken" },
+        { src: "https://flagcdn.com/w320/no.png", country: "Noorwegen" },
+        { src: "https://flagcdn.com/w320/ie.png", country: "Ierland" },
+        { src: "https://flagcdn.com/w320/at.png", country: "Oostenrijk" },
+        { src: "https://flagcdn.com/w320/ch.png", country: "Zwitserland" },
+        { src: "https://flagcdn.com/w320/sg.png", country: "Singapore" },
+        { src: "https://flagcdn.com/w320/be.png", country: "België" },
+        { src: "https://flagcdn.com/w320/pa.png", country: "Panama" },
+        { src: "https://flagcdn.com/w320/pg.png", country: "Papoea-Nieuw-Guinea" }
+    ];
+
+    let currentFlagIndex = 0;
+
+    function loadFlag() {
+        const flagElement = document.getElementById('flag');
+        flagElement.innerHTML = `<img src="${flags[currentFlagIndex].src}" alt="Vlag van ${flags[currentFlagIndex].country}">`;
+        document.getElementById('result').innerText = '';
+        document.getElementById('answer').value = '';
+    }
+
+    function checkAnswer() {
+        const userAnswer = document.getElementById('answer').value.trim();
+        const correctAnswer = flags[currentFlagIndex].country;
+
+        if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+            document.getElementById('result').innerText = 'Correct! 🎉';
+        } else {
+            document.getElementById('result').innerText = `Helaas, het juiste antwoord is ${correctAnswer}.`;
+        }
+
+        currentFlagIndex = (currentFlagIndex + 1) % flags.length;
+        loadFlag();
+    }
+
+    loadFlag();
+</script>
 
 </body>
 </html>
